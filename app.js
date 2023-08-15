@@ -17,7 +17,7 @@ const axiosInstance = axios.create({
 function createMilestone(title) {
   return new Promise(async (resolve, reject) => {
     try {
-      await axiosInstance.post(`/repos/it-harrison/qa-template/milestones`, {
+      await axiosInstance.post(`/repos/OWNER/REPO/milestones`, {
         title
       });
       resolve();
@@ -30,7 +30,7 @@ function createMilestone(title) {
 // get an object where key is milestone title and value is milestone number
 async function getMilestones() {
   try {
-    const { data } = await axiosInstance.get('/repos/it-harrison/qa-template/milestones');
+    const { data } = await axiosInstance.get('/repos/OWNER/REPO/milestones');
     return data.reduce((obj, { title, number }) => {
       obj[title] = number;
       return obj;
@@ -57,7 +57,7 @@ async function createMilestones(epics) {
 }
 
 const TOKEN2 = '<ZENHUB TOKEN>';
-const WORKSPACE_ID = '62447fb44deeed001392c57f'
+const WORKSPACE_ID = '<WORKSPACE ID>'
 
 const axiosInstance2 = axios.create({
   baseURL: 'https://api.zenhub.com/public/graphql',
@@ -68,7 +68,7 @@ const axiosInstance2 = axios.create({
 
 const getEpicsQuery = `query epicsFromWorkspace($workspaceId: ID!, $endCursor: String) {
   workspace(id: $workspaceId) {
-    epics (first: 21, after: $endCursor ) {
+    epics (first: 100, after: $endCursor ) {
       nodes {
         id
         issue {
@@ -164,7 +164,7 @@ async function getIssuesForEpic({ epicId, title, number }) {
 function addMilestone(milestone, number) {
   return new Promise(async (resolve, reject) => {
     try {
-      await axiosInstance.patch(`/repos/it-harrison/qa-template/issues/${number}`, {
+      await axiosInstance.patch(`/repos/OWNER/REPO/issues/${number}`, {
         milestone
       });
       resolve();
