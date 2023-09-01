@@ -1,0 +1,19 @@
+name: Create completed ticket after Collab Cycle Touchpoint
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  filter_labeled_issue:
+    name: Check if issue is part of a collab cycle touchpoint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if label matches target
+        run: |
+          if [[ ${{ github.event.label.name }} == 'hack' ]]; then
+            echo "ding ding ding!"
+          else
+            echo "bah! bah!"
+            exit 0
+          fi
